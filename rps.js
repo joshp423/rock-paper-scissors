@@ -3,159 +3,168 @@ let computerScore = 0;
 let computerChoice = 0;
 let humanChoice = "";
 let message = "";
-let i = 0;
+let roundCounter = 0;
 
 let buttons = document.getElementById('controlButtons');
 
 buttons.addEventListener('click', (event) => {
     let target = event.target;
-
+    computerChoice = getComputerChoice();
     switch(target.id) {
         case 'Rock':
-            if (i < 5) {
+            if (roundCounter < 4) {
+                roundCounter++;
                 humanChoice = target.id.toLowerCase();
-                computerChoice = getComputerChoice();
-                console.log(humanChoice, computerChoice, i)
+                console.log(humanChoice, computerChoice, roundCounter)
                 playRound(humanChoice, computerChoice);
-                displayScore (humanScore, computerScore, message);
-                i++;
+                displayScore (humanScore, computerScore, message, computerChoice, roundCounter);
                 break;
             }
+            roundCounter++;
+            humanChoice = target.id.toLowerCase();
+            console.log(humanChoice, computerChoice, roundCounter)
+            playRound(humanChoice, computerChoice);
             winnerLogic(humanScore, computerScore);
-            displayWinner (winner)
+            displayWinner (winner, message, roundCounter, computerChoice)
             break;
         case 'Paper':
-            if (i < 5) {
+            if (roundCounter < 4) {
+                roundCounter++;
                 humanChoice = target.id.toLowerCase();
-                computerChoice = getComputerChoice();
-                console.log(humanChoice, computerChoice)
+                console.log(humanChoice, computerChoice, roundCounter)
                 playRound(humanChoice, computerChoice);
-                displayScore (humanScore, computerScore, message);
-                i++;
+                displayScore (humanScore, computerScore, message, computerChoice, roundCounter);
                 break;
             }
+            roundCounter++;
+            humanChoice = target.id.toLowerCase();
+            console.log(humanChoice, computerChoice, roundCounter)
+            playRound(humanChoice, computerChoice);
             winnerLogic(humanScore, computerScore);
-            displayWinner (winner)
+            displayWinner (winner, message, roundCounter, computerChoice)
             break;
         case "Scissors":
-            if (i < 5) {
+            if (roundCounter < 4) {
+                roundCounter++;
                 humanChoice = target.id.toLowerCase();
-                computerChoice = getComputerChoice();
-                console.log(humanChoice, computerChoice)
+                console.log(humanChoice, computerChoice, roundCounter)
                 playRound(humanChoice, computerChoice);
-                displayScore (humanScore, computerScore, message);
-                i++;
+                displayScore (humanScore, computerScore, message, computerChoice, roundCounter);
                 break;
             }
+            roundCounter++;
+            humanChoice = target.id.toLowerCase();
+            console.log(humanChoice, computerChoice, roundCounter)
+            playRound(humanChoice, computerChoice);
             winnerLogic(humanScore, computerScore);
-            displayWinner (winner)
+            displayWinner (winner, message, roundCounter, computerChoice)
             break;
     }
 });
 
 function winnerLogic(humanScore, computerScore){
     if (humanScore > computerScore) {
-        winner = "you win the game!"
+        winner = "You win the game!"
+    }
+    else if (humanScore < computerScore) {
+        winner = "You lose the game!"
     }
     else {
-        winner = "you lose the game!"
+        winner = "Tie game! Play again to decide the winner"
     }
 };
 
-
-function gameLogic() {
-    let i = 0;
-    
-    
-}
 function getComputerChoice() {
-    computerChoice = Math.random()
-    
-    switch(computerChoice) {
-        case (computerChoice < 0.34):
-            computerChoice = "rock"
-            break;
-        case (computerChoice > 0.34 && computerChoice < 0.66):
-            computerChoice = "paper"
-            break;
-        case (computerChoice >= 0.66):
-            computerChoice = "scissors"
+    computerRng = Math.random()
+    if (computerRng < 0.34) {
+        return "Rock";
+    }
+    else if (computerRng >= 0.34 && computerRng < 0.66) {
+        return "Paper";
+    }
+    else {
+        return "Scissors";
     };
 }
 
 
 function playRound(humanChoice, computerChoice) {
-    console.log(humanChoice)
     if (humanChoice === "rock") {
-        if (computerChoice === "rock") {
-            message = "tie!";
+        if (computerChoice === "Rock") {
+            message = "Tie!";
             return;
         }
-        else if (computerChoice === "paper") {
-            message = "you lose! paper beats rock";
+        else if (computerChoice === "Paper") {
+            message = "You lose! Paper beats rock.";
             computerScore ++;
             return;
         }
         else {
-            message = "you win! rock beats scissors";
+            message = "You win! Rock beats scissors.";
             humanScore ++;
             return;
         }
     }
     else if (humanChoice === "paper") {
-        if (computerChoice === "rock") {
-            message = "you win! paper beats rock";
+        if (computerChoice === "Rock") {
+            message = "You win! Paper beats rock.";
             humanScore ++;
             return;        
         }
-        else if (computerChoice === "paper") {
-            message = "tie!"
+        else if (computerChoice === "Paper") {
+            message = "Tie!"
             return;
         }
         else {
-            message = "you lose! scissors beats paper";
+            message = "You lose! Scissors beats paper.";
             computerScore ++;
             return;
         }
     }
     else if (humanChoice === "scissors") {
-        if (computerChoice === "rock") {
-            message = "you lose! rock beats scissors";
+        if (computerChoice === "Rock") {
+            message = "You lose! Rock beats scissors.";
             computerScore ++;
             return;        
         }
-        else if (computerChoice === "paper") {
-            message = "you win! scissors beats paper";
+        else if (computerChoice === "Paper") {
+            message = "You win! Scissors beats paper.";
             humanScore ++;
             return;
         }
         else {
-            message = "tie!";
+            message = "Tie!";
             return;
         }
     }
 };
 
 
-function displayScore (humanScore, computerScore, message, computerChoice) {
+function displayScore (humanScore, computerScore, message, computerChoice, roundCounter) {
     let hScoreDisplay = document.getElementById('hScore');
     let cScoreDisplay = document.getElementById('cScore');
     let cChoiceDisplay = document.getElementById('cSelection');
     let results = document.getElementById('results');
+    let round = document.getElementById('round');
 
-    cChoiceDisplay = `Computer Choice: ${computerChoice}`;
+    cChoiceDisplay.innerText = `Computer Choice: ${computerChoice}`;
     hScoreDisplay.innerText = `Human Score: ${humanScore}`;
     cScoreDisplay.innerText = `Computer Score: ${computerScore}`;
     results.innerText = `${message}`;
+    round.innerText = `Round: ${roundCounter}`;
 }
 
-function displayWinner (winner, message) {
+function displayWinner (winner, message, roundCounter) {
     let hScoreDisplay = document.getElementById('hScore');
     let cScoreDisplay = document.getElementById('cScore');
+    let cChoiceDisplay = document.getElementById('cSelection');
     let results = document.getElementById('results');
+    let round = document.getElementById('round');
 
+    cChoiceDisplay.innerText = `Computer Choice: ${computerChoice}`;
     hScoreDisplay.innerText = `Human Score: ${humanScore}`;
     cScoreDisplay.innerText = `Computer Score: ${computerScore}`;
-    results.innerText = `${message}, ${winner}`;
+    results.innerText = `${message} - ${winner}`;
+    round.innerText = `Round: ${roundCounter}`;
 }
 
