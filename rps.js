@@ -10,55 +10,23 @@ let buttons = document.getElementById('controlButtons');
 buttons.addEventListener('click', (event) => {
     let target = event.target;
     computerChoice = getComputerChoice();
-    switch(target.id) {
-        case 'Rock':
-            if (roundCounter < 4) {
-                roundCounter++;
-                humanChoice = target.id.toLowerCase();
-                console.log(humanChoice, computerChoice, roundCounter)
-                playRound(humanChoice, computerChoice);
-                displayScore (humanScore, computerScore, message, computerChoice, roundCounter);
-                break;
-            }
-            roundCounter++;
-            humanChoice = target.id.toLowerCase();
-            console.log(humanChoice, computerChoice, roundCounter)
-            playRound(humanChoice, computerChoice);
-            winnerLogic(humanScore, computerScore);
-            displayWinner (winner, message, roundCounter, computerChoice)
-            break;
-        case 'Paper':
-            if (roundCounter < 4) {
-                roundCounter++;
-                humanChoice = target.id.toLowerCase();
-                console.log(humanChoice, computerChoice, roundCounter)
-                playRound(humanChoice, computerChoice);
-                displayScore (humanScore, computerScore, message, computerChoice, roundCounter);
-                break;
-            }
-            roundCounter++;
-            humanChoice = target.id.toLowerCase();
-            console.log(humanChoice, computerChoice, roundCounter)
-            playRound(humanChoice, computerChoice);
-            winnerLogic(humanScore, computerScore);
-            displayWinner (winner, message, roundCounter, computerChoice)
-            break;
-        case "Scissors":
-            if (roundCounter < 4) {
-                roundCounter++;
-                humanChoice = target.id.toLowerCase();
-                console.log(humanChoice, computerChoice, roundCounter)
-                playRound(humanChoice, computerChoice);
-                displayScore (humanScore, computerScore, message, computerChoice, roundCounter);
-                break;
-            }
-            roundCounter++;
-            humanChoice = target.id.toLowerCase();
-            console.log(humanChoice, computerChoice, roundCounter)
-            playRound(humanChoice, computerChoice);
-            winnerLogic(humanScore, computerScore);
-            displayWinner (winner, message, roundCounter, computerChoice)
-            break;
+   
+    if (roundCounter < 4) {
+        roundCounter++;
+        humanChoice = target.id.toLowerCase();
+        console.log(humanChoice, computerChoice, roundCounter)
+        playRound(humanChoice, computerChoice);
+        displayScore (humanScore, computerScore, message, computerChoice, roundCounter);
+        return;
+    }
+    else if (roundCounter === 4){
+        roundCounter++;
+        humanChoice = target.id.toLowerCase();
+        console.log(humanChoice, computerChoice, roundCounter)
+        playRound(humanChoice, computerChoice);
+        winnerLogic(humanScore, computerScore);
+        displayWinner (winner, message, roundCounter, computerChoice)
+        return;
     }
 });
 
@@ -86,7 +54,6 @@ function getComputerChoice() {
         return "Scissors";
     };
 }
-
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === "rock") {
@@ -138,7 +105,6 @@ function playRound(humanChoice, computerChoice) {
         }
     }
 };
-
 
 function displayScore (humanScore, computerScore, message, computerChoice, roundCounter) {
     let hScoreDisplay = document.getElementById('hScore');
