@@ -14,7 +14,6 @@ buttons.addEventListener('click', (event) => {
     if (roundCounter < 4) {
         roundCounter++;
         humanChoice = target.id.toLowerCase();
-        console.log(humanChoice, computerChoice, roundCounter)
         playRound(humanChoice, computerChoice);
         displayScore (humanScore, computerScore, message, computerChoice, roundCounter);
         return;
@@ -22,7 +21,6 @@ buttons.addEventListener('click', (event) => {
     else if (roundCounter === 4){
         roundCounter++;
         humanChoice = target.id.toLowerCase();
-        console.log(humanChoice, computerChoice, roundCounter)
         playRound(humanChoice, computerChoice);
         winnerLogic(humanScore, computerScore);
         displayWinner (winner, message, roundCounter, computerChoice)
